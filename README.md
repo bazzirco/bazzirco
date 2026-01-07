@@ -11,16 +11,12 @@ Zirconium is built primarily for container-focused development and day-to-day us
 ## How do I use this?
 The best way to install Zirconium is to download our ISOs! Pick your flavor:
 
-### NOTICE!
-
-ISOs are currently borked, you need to run the rebasing instructions after installing or else YOU WILL NOT GET UPDATES!
-
 - AMD64
-- - **[AMD/Intel GPUs](https://isos.zirconium.gay/zirconium-isos/zirconium-amd64.iso)** ([Checksum](https://isos.zirconium.gay/zirconium-isos/zirconium-amd64.iso-CHECKSUM))
-- - **[NVIDIA GPUs (GTX 16xx and RTX series)](https://isos.zirconium.gay/zirconium-isos/zirconium-nvidia-amd64.iso)** ([Checksum](https://isos.zirconium.gay/zirconium-isos/zirconium-nvidia-amd64.iso-CHECKSUM))
+  - **[AMD/Intel GPUs](https://isos.zirconium.gay/zirconium-isos/zirconium-amd64.iso)** ([Checksum](https://isos.zirconium.gay/zirconium-isos/zirconium-amd64.iso-CHECKSUM))
+  - **[NVIDIA GPUs (GTX 16xx and RTX series)](https://isos.zirconium.gay/zirconium-isos/zirconium-nvidia-amd64.iso)** ([Checksum](https://isos.zirconium.gay/zirconium-isos/zirconium-nvidia-amd64.iso-CHECKSUM))
 - ARM64
-- - **[AMD/Intel GPUs](https://isos.zirconium.gay/zirconium-isos/zirconium-arm64.iso)** ([Checksum](https://isos.zirconium.gay/zirconium-isos/zirconium-arm64.iso-CHECKSUM))
-- - **[NVIDIA GPUs (GTX 16xx and RTX series)](https://isos.zirconium.gay/zirconium-isos/zirconium-nvidia-arm64.iso)** ([Checksum](https://isos.zirconium.gay/zirconium-isos/zirconium-nvidia-arm64.iso-CHECKSUM))
+  - **[AMD/Intel GPUs](https://isos.zirconium.gay/zirconium-isos/zirconium-arm64.iso)** ([Checksum](https://isos.zirconium.gay/zirconium-isos/zirconium-arm64.iso-CHECKSUM))
+  - **[NVIDIA GPUs (GTX 16xx and RTX series)](https://isos.zirconium.gay/zirconium-isos/zirconium-nvidia-arm64.iso)** ([Checksum](https://isos.zirconium.gay/zirconium-isos/zirconium-nvidia-arm64.iso-CHECKSUM))
 
 Alternatively, you can install Zirconium by doing a rebase from an existing Fedora Atomic install. We recommend [Bluefin](https://projectbluefin.io/), but it doesn't really matter.
 
@@ -37,6 +33,10 @@ sudo bootc switch ghcr.io/zirconium-dev/zirconium-nvidia:latest
 ```
 
 [Join our Discord](https://discord.gg/mmgNQpxwhW)!
+
+## Notice about Nvidia GPUs
+
+Currently the Nvidia kernel module is not being signed so there is no way of using secure boot on the `-nvidia` images. ([related issue](https://github.com/zirconium-dev/zirconium/issues/108))
 
 ## Can I still customize Niri/DankMaterialShell?
 Yes! We do update our dotfiles in OS updates, however you're not forced to use them. We're hoping at some point to be able to make the dotfile update process less destructive. 
