@@ -32,12 +32,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flavor: ["", "nvidia"]
-        platform: ["amd64", "arm64"]
-    runs-on: ${{ matrix.platform == 'amd64' && 'ubuntu-24.04' || 'ubuntu-24.04-arm' }}
+        #flavor: ["", "nvidia"]
+        #platform: ["amd64", "arm64"]
+        base: ["-gnome", "-deck-gnome", "-gnome-nvidia-open", "-deck-nvidia-gnome"]
+        pretty: ["", "deck", "nvidia", "deck-nvidia"]
+    runs-on: 'ubuntu-24.04'
     steps:
       - name: Mount BTRFS for podman storage
-        if: ${{ matrix.platform != 'arm64' }}
         uses: ublue-os/container-storage-action@911baca08baf30c8654933e9e9723cb399892140
         continue-on-error: true
         with:
@@ -51,15 +52,16 @@ jobs:
 
       - name: Change image name depending on build flavor
         env:
-          BUILD_FLAVOR: ${{ matrix.flavor }}
+          BUILD_FLAVOR: ${{ matrix.pretty }}
         run: |
           if [ "${BUILD_FLAVOR}" != "" ] ; then
-            echo "IMAGE_NAME=${IMAGE_NAME}-${{ matrix.flavor }}" >> $GITHUB_ENV
+            echo "IMAGE_NAME=${IMAGE_NAME}-${{ matrix.pretty }}" >> $GITHUB_ENV
           fi
 
       - name: Build image
         id: build
         env:
+          BASE_IMAGE: ${{ matrix.base }}
           BUILD_FLAVOR: ${{ matrix.flavor }}
         run: sudo podman build "--build-arg=BUILD_FLAVOR=${BUILD_FLAVOR}" -t "${IMAGE_NAME}:${DEFAULT_TAG}" -f ./Containerfile .
 
