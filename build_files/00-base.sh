@@ -3,7 +3,18 @@
 set -xeuo pipefail
 
 #De-bazzite-ify
-alias dnf="/usr/bin/dnf5"
+dnf5 versionlock remove \
+        pipewire \
+        pipewire-alsa \
+        pipewire-gstreamer \
+        pipewire-jack-audio-connection-kit \
+        pipewire-jack-audio-connection-kit-libs \
+        pipewire-libs \
+        pipewire-plugin-libcamera \
+        pipewire-pulseaudio \
+        pipewire-utils \
+        wireplumber \
+        wireplumber-libs
 
 dnf -y remove *gnome* *gdm*
 
