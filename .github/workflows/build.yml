@@ -34,7 +34,7 @@ jobs:
       matrix:
         #flavor: ["", "nvidia"]
         platform: ["amd64"]
-        base: ["-gnome", "-deck-gnome", "-gnome-nvidia-open", "-deck-nvidia-gnome"]
+        base: ["gnome", "deck-gnome", "gnome-nvidia-open", "deck-nvidia-gnome"]
         pretty: ["", "deck", "nvidia", "deck-nvidia"]
     runs-on: 'ubuntu-24.04'
     steps:
@@ -61,9 +61,8 @@ jobs:
       - name: Build image
         id: build
         env:
-          BASE_IMAGE: ${{ matrix.base }}
-          BUILD_FLAVOR: ${{ matrix.flavor }}
-        run: sudo podman build "--build-arg=BUILD_FLAVOR=${BUILD_FLAVOR}" -t "${IMAGE_NAME}:${DEFAULT_TAG}" -f ./Containerfile .
+          BASE_IMAGE: "ghcr.io/ublue-os/bazzite-${{ matrix.base }}:latest"
+        run: sudo podman build "--build-arg=BASE_IMAGE=${BASE_IMAGE}" -t "${IMAGE_NAME}:${DEFAULT_TAG}" -f ./Containerfile .
 
       - name: Rechunk Image
         run: sudo podman run --rm --privileged -v /var/lib/containers:/var/lib/containers --entrypoint /usr/libexec/bootc-base-imagectl "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" rechunk --max-layers 67 "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" "localhost/${IMAGE_NAME}:${DEFAULT_TAG}"

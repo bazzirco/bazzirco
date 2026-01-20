@@ -1,4 +1,4 @@
-ARG BUILD_FLAVOR="${BUILD_FLAVOR:-}"
+ARG BASE_IMAGE="${BASE_IMAGE:-}"
 
 FROM scratch AS ctx
 
@@ -10,8 +10,7 @@ COPY --from=ghcr.io/projectbluefin/common:latest /system_files/shared/usr/bin/lu
 COPY --from=ghcr.io/projectbluefin/common:latest /system_files/shared/usr/share/ublue-os/just /files/usr/share/ublue-os/just
 COPY --from=ghcr.io/ublue-os/brew:latest /system_files /files
 
-FROM quay.io/fedora/fedora-bootc:43
-ARG BUILD_FLAVOR="${BUILD_FLAVOR:-}"
+FROM "$BASE_IMAGE"
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/var \
