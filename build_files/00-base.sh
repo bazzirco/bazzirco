@@ -18,7 +18,7 @@ dnf -y remove \
 	pipewire-alsa \
 	pipewire-module-filter-chain-sofa \
 	pipewire-libs \
-	pipewire-alsa \
+	pipewire-alsa 
 
 dnf -y install \
 	pipewire-libs-extra \ 
@@ -33,7 +33,7 @@ dnf -y install \
 	pipewire-alsa \
 	pipewire-module-filter-chain-sofa \
 	pipewire-libs \
-	pipewire-alsa \
+	pipewire-alsa 
 
 
 systemctl enable systemd-timesyncd
