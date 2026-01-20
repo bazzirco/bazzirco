@@ -2,6 +2,10 @@
 
 set -xeuo pipefail
 
+rpm -qa | grep "pipewire"
+
+rgneprgnperngpermgp
+
 dnf -y remove *gnome* *gdm*
 
 systemctl enable systemd-timesyncd
