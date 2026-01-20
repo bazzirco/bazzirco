@@ -2,6 +2,10 @@
 
 set -xeuo pipefail
 
+dnf repolist
+
+opdifgjnsoeirghnjoisnhrfogin
+
 dnf -y remove *gnome* *gdm*
 
 systemctl enable systemd-timesyncd
