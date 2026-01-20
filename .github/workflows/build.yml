@@ -34,8 +34,8 @@ jobs:
       matrix:
         #flavor: ["", "nvidia"]
         platform: ["amd64"]
-        base: ["gnome", "deck-gnome", "gnome-nvidia-open", "deck-nvidia-gnome"]
-        #pretty: ["", "deck", "nvidia", "deck-nvidia"]
+        #image: ["gnome", "deck-gnome", "gnome-nvidia-open", "deck-nvidia-gnome"]
+        edition: ["", "deck", "nvidia", "deck-nvidia"]
     runs-on: 'ubuntu-24.04'
     steps:
       - name: Mount BTRFS for podman storage
@@ -50,27 +50,36 @@ jobs:
         with:
           submodules: true
 
-      - name: Change image name depending on pretty name
+      - name: Change image name depending on edition name
         env:
-          BUILD_FLAVOR: ${{ matrix.base }}#CHANGE BACK TO PRETTY
+          BUILD_FLAVOR: ${{ matrix.edition }}
         run: |
-          if [ "${BUILD_FLAVOR}" == "gnome" ] ; then
-            echo "IMAGE_NAME=${IMAGE_NAME}" >> $GITHUB_ENV
+          if [ "${BUILD_FLAVOR}" != "" ] ; then
+            echo "IMAGE_NAME=${IMAGE_NAME}-${{ matrix.edition }}" >> $GITHUB_ENV
           fi
-          if [ "${BUILD_FLAVOR}" == "deck-gnome" ] ; then
-            echo "IMAGE_NAME=${IMAGE_NAME}-deck" >> $GITHUB_ENV
+
+      - name: Choose Bazzite base image
+        id: pick_image
+        env:
+            BUILD_EDITION: ${{ matrix.edition }}
+        run: |
+          if [ "${BUILD_EDITION}" == "" ] ; then
+            echo "BASE_IMAGE=https://ublue-os/bazzite-gnome:latest" >> $GITHUB_ENV
           fi
-          if [ "${BUILD_FLAVOR}" == "gnome-nvidia-open" ] ; then
-            echo "IMAGE_NAME=${IMAGE_NAME}-nvidia" >> $GITHUB_ENV
+          if [ "${BUILD_EDITION}" == "deck" ] ; then
+            echo "BASE_IMAGE=https://ublue-os/bazzite-deck-gnome:latest" >> $GITHUB_ENV
           fi
-          if [ "${BUILD_FLAVOR}" == "deck-nvidia-open" ] ; then
-            echo "IMAGE_NAME=${IMAGE_NAME}-nvidia" >> $GITHUB_ENV
+          if [ "${BUILD_EDITION}" == "nvidia" ] ; then
+            echo "BASE_IMAGE=https://ublue-os/bazzite-gnome-nvidia-open:latest" >> $GITHUB_ENV
+          fi
+          if [ "${BUILD_EDITION}" == "deck-nvidia" ] ; then
+            echo "BASE_IMAGE=https://ublue-os/bazzite-deck-nvidia-gnome:latest" >> $GITHUB_ENV
           fi
 
       - name: Build image
         id: build
         env:
-          BASE_IMAGE: "ghcr.io/ublue-os/bazzite-${{ matrix.base }}:latest"
+          BASE_IMAGE: $BASE_IMAGE
         run: sudo podman build "--build-arg=BASE_IMAGE=${BASE_IMAGE}" -t "${IMAGE_NAME}:${DEFAULT_TAG}" -f ./Containerfile .
 
       - name: Rechunk Image
