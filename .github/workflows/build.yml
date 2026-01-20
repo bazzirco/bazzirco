@@ -35,7 +35,7 @@ jobs:
         #flavor: ["", "nvidia"]
         platform: ["amd64"]
         base: ["gnome", "deck-gnome", "gnome-nvidia-open", "deck-nvidia-gnome"]
-        pretty: ["", "deck", "nvidia", "deck-nvidia"]
+        #pretty: ["", "deck", "nvidia", "deck-nvidia"]
     runs-on: 'ubuntu-24.04'
     steps:
       - name: Mount BTRFS for podman storage
@@ -52,10 +52,10 @@ jobs:
 
       - name: Change image name depending on build flavor
         env:
-          BUILD_FLAVOR: ${{ matrix.pretty }}
+          BUILD_FLAVOR: ${{ matrix.base }}#CHANGE BACK TO PRETTY
         run: |
           if [ "${BUILD_FLAVOR}" != "" ] ; then
-            echo "IMAGE_NAME=${IMAGE_NAME}-${{ matrix.pretty }}" >> $GITHUB_ENV
+            echo "IMAGE_NAME=${IMAGE_NAME}-${{ matrix.base }}" >> $GITHUB_ENV#CHANGE BACK TO PRETTY
           fi
 
       - name: Build image
