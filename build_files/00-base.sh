@@ -1,5 +1,9 @@
 #!/bin/bash
 
+dnf repolist
+
+diddyblud
+
 set -xeuo pipefail
 
 dnf -y remove *gnome* *gdm*
