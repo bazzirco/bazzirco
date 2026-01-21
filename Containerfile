@@ -12,6 +12,8 @@ COPY --from=ghcr.io/ublue-os/brew:latest /system_files /files
 
 FROM "$BASE_IMAGE"
 
+ARG DECK_IMAGE="${DECK_IMAGE:-}"
+
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/var \
     --mount=type=tmpfs,dst=/tmp \

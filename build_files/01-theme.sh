@@ -41,10 +41,21 @@ dnf -y \
     install --setopt=install_weak_deps=False \
     dms \
     dms-cli \
-    dms-greeter \
     dgop \
     dsearch
-install -Dpm0644 -t /usr/lib/pam.d/ /usr/share/quickshell/dms/assets/pam/* # Fixes long login times on fingerprint auth
+install -Dpm0644 -t /usr/lib/pam.d/ /usr/share/quickshell/dms/assets/pam/* # Fixes long loging times on fingerprint auth
+
+#Only installs greeter for non-deck images
+if [ "$DECK_IMAGE" == False ] ; then
+  dnf -y \
+      --enablerepo copr:copr.fedorainfracloud.org:avengemedia:dms-git \
+      --enablerepo copr:copr.fedorainfracloud.org:avengemedia:danklinux \
+      install --setopt=install_weak_deps=False \
+      dms-greeter 
+  dnf -y install \
+  	  greetd \
+  	  greetd-selinux \
+fi
 
 dnf -y install \
     brightnessctl \
@@ -62,8 +73,6 @@ dnf -y install \
     gnome-disk-utility \
     gnome-keyring \
     gnome-keyring-pam \
-    greetd \
-    greetd-selinux \
     hyfetch \
     input-remapper \
     just \
@@ -97,7 +106,10 @@ dnf install -y --setopt=install_weak_deps=False \
     plasma-breeze \
     kf6-qqc2-desktop-style
 
-sed --sandbox -i -e '/gnome_keyring.so/ s/-auth/auth/ ; /gnome_keyring.so/ s/-session/session/' /etc/pam.d/greetd
+#Only do greetd keyring stuff on non-deck images
+if [ "$DECK_IMAGE" == False ] ; then
+  sed --sandbox -i -e '/gnome_keyring.so/ s/-auth/auth/ ; /gnome_keyring.so/ s/-session/session/' /etc/pam.d/greetd
+fi
 
 # Codecs for video thumbnails on nautilus
 
@@ -115,7 +127,10 @@ add_wants_niri udiskie.service
 add_wants_niri foot-server.service
 cat /usr/lib/systemd/user/niri.service
 
-systemctl enable greetd
+#Only enable greetd service on non-deck images
+if [ "$DECK_IMAGE" == False ] ; then
+  systemctl enable greetd
+fi
 systemctl enable firewalld
 
 # Sacrificed to the :steamhappy: emoji old god
@@ -172,12 +187,15 @@ fc-cache --force --really-force --system-only --verbose # recreate font-cache to
 
 echo 'source /usr/share/zirconium/shell/pure.bash' | tee -a "/etc/bashrc"
 
-tee /usr/lib/tmpfiles.d/99-greeter-config.conf <<'EOF'
-L /var/cache/dms-greeter/settings.json - greeter greeter - /usr/share/zirconium/zdots/dot_config/DankMaterialShell/settings.json
-L /var/cache/dms-greeter/session.json - greeter greeter - /usr/share/zirconium/zdots/private_dot_local/state/DankMaterialShell/session.json
-L /var/cache/dms-greeter/dms-colors.json - greeter greeter - /usr/share/zirconium/zdots/dot_cache/DankMaterialShell/dms-colors.json
-L /var/cache/dms-greeter/colors.json - greeter greeter - /usr/share/zirconium/zdots/dot_cache/DankMaterialShell/dms-colors.json
-EOF
+#Only do DMS-greeter config on non-deck images
+if [ "$DECK_IMAGE" == False ] ; then
+  tee /usr/lib/tmpfiles.d/99-greeter-config.conf <<'EOF'
+  L /var/cache/dms-greeter/settings.json - greeter greeter - /usr/share/zirconium/zdots/dot_config/DankMaterialShell/settings.json
+  L /var/cache/dms-greeter/session.json - greeter greeter - /usr/share/zirconium/zdots/private_dot_local/state/DankMaterialShell/session.json
+  L /var/cache/dms-greeter/dms-colors.json - greeter greeter - /usr/share/zirconium/zdots/dot_cache/DankMaterialShell/dms-colors.json
+  L /var/cache/dms-greeter/colors.json - greeter greeter - /usr/share/zirconium/zdots/dot_cache/DankMaterialShell/dms-colors.json
+  EOF
+fi
 
 install -d /usr/share/bash-completion/completions /usr/share/zsh/site-functions /usr/share/fish/vendor_completions.d/
 just --completions bash | sed -E 's/([\(_" ])just/\1zjust/g' > /usr/share/bash-completion/completions/zjust

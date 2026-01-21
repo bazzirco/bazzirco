@@ -32,8 +32,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        #edition: ["", "deck", "nvidia", "deck-nvidia"]
-        edition: ["", "nvidia"]
+        edition: ["", "deck", "nvidia", "deck-nvidia"]
+        #edition: ["", "nvidia"]
     runs-on: 'ubuntu-24.04'
     steps:
       - name: Mount BTRFS for podman storage
@@ -60,6 +60,7 @@ jobs:
         id: pick_image
         env:
             BUILD_EDITION: ${{ matrix.edition }}
+            DECK_EDITION: False
         run: |
           if [ "${BUILD_EDITION}" == "" ] ; then
             echo "BASE_IMAGE=ghcr.io/ublue-os/bazzite-gnome:latest" >> $GITHUB_ENV
@@ -72,6 +73,11 @@ jobs:
           fi
           if [ "${BUILD_EDITION}" == "deck-nvidia" ] ; then
             echo "BASE_IMAGE=ghcr.io/ublue-os/bazzite-deck-nvidia-gnome:latest" >> $GITHUB_ENV
+          fi
+          if [[ $BASE_IMAGE =~ "deck" ]]; then
+          	echo "DECK_IMAGE=True" >> $GITHUB_ENV
+          else
+            echo "DECK_IMAGE=False" >> $GITHUB_ENV
           fi
 
       - name: Build image

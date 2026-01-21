@@ -18,6 +18,10 @@ dnf5 versionlock delete \
 
 dnf -y remove *gnome* *gdm*
 
+if [ "$DECK_IMAGE" == True ] ; then
+  sed -i 's|/usr/bin/gnome-session|/usr/bin/niri-session|g' /usr/bin/gnome-session-oneshot
+fi
+
 systemctl enable systemd-timesyncd
 systemctl enable systemd-resolved.service
 
