@@ -32,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        edition: ["", "deck", "nvidia", "deck-nvidia"]
+        edition: ["", "deck", "nvidia", "deck-nvidia", "dx", "dx-nvidia"]
         #edition: ["", "nvidia"]
     runs-on: 'ubuntu-24.04'
     steps:
@@ -77,7 +77,14 @@ jobs:
             echo "BASE_IMAGE=ghcr.io/ublue-os/bazzite-deck-nvidia-gnome:latest" >> $GITHUB_ENV
             echo "DECK_IMAGE=True" >> $GITHUB_ENV
           fi
-          
+          if [ "${BUILD_EDITION}" == "dx" ] ; then
+            echo "BASE_IMAGE=ghcr.io/ublue-os/bazzite-dx-gnome:latest" >> $GITHUB_ENV
+            echo "DECK_IMAGE=True" >> $GITHUB_ENV
+          fi
+          if [ "${BUILD_EDITION}" == "dx-nvidia" ] ; then
+            echo "BASE_IMAGE=ghcr.io/ublue-os/bazzite-dx-nvidia-gnome:latest" >> $GITHUB_ENV
+            echo "DECK_IMAGE=True" >> $GITHUB_ENV
+          fi
 
       - name: Build image
         id: build
