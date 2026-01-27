@@ -24,6 +24,43 @@ dnf -y remove \
 		gnome-settings-daemon \
 		gnome-software
 
+if [ -z "$IMAGE_PRETTY_NAME" ] ; then
+  jq '.["image-name"]="bazzirco"' \
+    /usr/share/ublue-os/image-info.json \
+    > /usr/share/ublue-os/image-info.json.tmp \
+  && mv /usr/share/ublue-os/image-info.json.tmp /usr/share/ublue-os/image-info.json
+  jq '.["image-ref"]="ostree-image-signed:docker://ghcr.io/bazzirco/bazzirco"' \
+    /usr/share/ublue-os/image-info.json \
+    > /usr/share/ublue-os/image-info.json.tmp \
+  && mv /usr/share/ublue-os/image-info.json.tmp /usr/share/ublue-os/image-info.json
+else
+  jq --arg name "$IMAGE_PRETTY_NAME" \
+    '.["image-name"]="bazzirco-\($name)"' \
+    /usr/share/ublue-os/image-info.json \
+    > /usr/share/ublue-os/image-info.json.tmp \
+  && mv /usr/share/ublue-os/image-info.json.tmp /usr/share/ublue-os/image-info.json
+  jq '.["image-ref"]="ostree-image-signed:docker://ghcr.io/bazzirco/bazzirco-$IMAGE_PRETTY_NAME"' \
+    /usr/share/ublue-os/image-info.json \
+    > /usr/share/ublue-os/image-info.json.tmp \
+  && mv /usr/share/ublue-os/image-info.json.tmp /usr/share/ublue-os/image-info.json
+fi
+
+
+jq --arg tag "$IMAGE_TAG" \
+  '.["image-branch"]=$tag' \
+  /usr/share/ublue-os/image-info.json \
+> /usr/share/ublue-os/image-info.json.tmp \
+&& mv /usr/share/ublue-os/image-info.json.tmp /usr/share/ublue-os/image-info.json
+
+jq --arg tag "$IMAGE_TAG" \
+  '.["image-tag"]=$tag' \
+  /usr/share/ublue-os/image-info.json \
+> /usr/share/ublue-os/image-info.json.tmp \
+&& mv /usr/share/ublue-os/image-info.json.tmp /usr/share/ublue-os/image-info.json
+
+
+#End de-bazzite-ify
+
 if [ "$DECK_IMAGE" == True ] ; then
   sed -i 's|/usr/bin/gnome-session|/usr/bin/niri-session|g' /usr/bin/gnome-session-oneshot
 fi

@@ -91,7 +91,9 @@ jobs:
         env:
           BASE_IMAGE: ${{ env.BASE_IMAGE}}
           DECK_IMAGE: ${{ env.DECK_IMAGE}}
-        run: sudo podman build "--build-arg=BASE_IMAGE=${BASE_IMAGE}" "--build-arg=DECK_IMAGE=${DECK_IMAGE}" -t "${IMAGE_NAME}:${DEFAULT_TAG}" -f ./Containerfile .
+          IMAGE_TAG: ${{ env.DEFAULT_TAG }}
+          IMAGE_PRETTY_NAME: ${{ matrix.edition }}
+        run: sudo podman build "--build-arg=BASE_IMAGE=${BASE_IMAGE}" "--build-arg=DECK_IMAGE=${DECK_IMAGE}" "--build-arg=IMAGE_TAG=${IMAGE_TAG}" "--build-arg=IMAGE_PRETTY_NAME=${IMAGE_PRETTY_NAME}" -t "${IMAGE_NAME}:${DEFAULT_TAG}" -f ./Containerfile .
 
 #      #TODO: Fix rechunking because I'm a chud!
 #      - name: Rechunk Image
