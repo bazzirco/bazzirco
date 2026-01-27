@@ -24,10 +24,6 @@ dnf -y remove \
 		gnome-settings-daemon \
 		gnome-software
 
-if [ "$DECK_IMAGE" == True ] ; then
-  sed -i 's|/usr/bin/gnome-session|/usr/bin/niri-session|g' /usr/bin/gnome-session-oneshot
-fi
-
 systemctl enable systemd-timesyncd
 systemctl enable systemd-resolved.service
 
@@ -43,7 +39,6 @@ dnf -y remove \
   console-login-helper-messages \
   chrony \
   sssd* \
-  qemu-user-static* \
   toolbox
 
 # These were manually picked out from a Bluefin comparison with `rpm -qa --qf="%{NAME}\n" `
