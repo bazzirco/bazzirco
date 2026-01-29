@@ -5,6 +5,7 @@ Deck images exist, and do work, but they're a WIP due to a lack of controller na
 
 To install, install Bazzite (preferably the GNOME image, KDE does work though), and rebase with one of these commands. Nvidia images are GTX 16XX or newer.
 
+## Regular Images
 AMD/Intel image:
 ```
 sudo bootc switch ghcr.io/bazzirco/bazzirco
@@ -12,7 +13,17 @@ sudo bootc switch ghcr.io/bazzirco/bazzirco
 
 Nvidia image:
 ```
-sudo bootc switch ghcr.io/bazzirco/bazzirco
+sudo bootc switch ghcr.io/bazzirco/bazzirco-nvidia
+```
+# Developer Experience (DX) images
+AMD/Intel image:
+```
+sudo bootc switch ghcr.io/bazzirco/bazzirco-dx
+```
+
+Nvidia image:
+```
+sudo bootc switch ghcr.io/bazzirco/bazzirco-dx-nvidia
 ```
 
 [Join the Zirconium Discord](https://discord.gg/mmgNQpxwhW)!
