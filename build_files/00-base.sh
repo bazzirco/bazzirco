@@ -140,6 +140,7 @@ dnf -y install \
   mobile-broadband-provider-info \
   mt7xxx-firmware \
   nxpwireless-firmware \
+  nmap-ncat \
   open-vm-tools \
   open-vm-tools-desktop \
   openconnect \
@@ -166,6 +167,7 @@ dnf -y install \
   usb_modeswitch \
   uxplay \
   vpnc \
+  wget \
   whois \
   wireguard-tools \
   zram-generator-defaults
