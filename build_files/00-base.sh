@@ -167,7 +167,6 @@ dnf -y install \
   usb_modeswitch \
   uxplay \
   vpnc \
-  wget \
   whois \
   wireguard-tools \
   zram-generator-defaults
