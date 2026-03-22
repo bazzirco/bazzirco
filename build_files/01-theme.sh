@@ -11,7 +11,6 @@ install -d /usr/share/zirconium/
 dnf -y copr enable zirconium/packages
 dnf -y copr disable zirconium/packages
 dnf -y --enablerepo copr:copr.fedorainfracloud.org:zirconium:packages install \
-    matugen \
     iio-niri \
     valent-git
 
@@ -62,6 +61,7 @@ if [ "$DECK_IMAGE" == False ] ; then
 fi
 
 dnf -y install \
+	matugen \
     brightnessctl \
     cava \
     chezmoi \
