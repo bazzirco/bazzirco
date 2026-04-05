@@ -8,11 +8,10 @@ dnf -y install \
 
 install -d /usr/share/zirconium/
 
-dnf -y copr enable zirconium/packages
-dnf -y copr disable zirconium/packages
-dnf -y --enablerepo copr:copr.fedorainfracloud.org:zirconium:packages install \
+dnf install \
     iio-niri \
-    valent-git
+    valent \
+    matugen
 
 dnf -y copr enable yalter/niri-git
 dnf -y copr disable yalter/niri-git
