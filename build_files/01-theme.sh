@@ -8,7 +8,7 @@ dnf -y install \
 
 install -d /usr/share/zirconium/
 
-dnf -y install \
+dnf5 -y --enable-repo=terra install \
     iio-niri \
     valent \
     matugen
