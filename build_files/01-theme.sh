@@ -8,7 +8,7 @@ dnf -y install \
 
 install -d /usr/share/zirconium/
 
-dnf install \
+dnf -y install \
     iio-niri \
     valent \
     matugen
