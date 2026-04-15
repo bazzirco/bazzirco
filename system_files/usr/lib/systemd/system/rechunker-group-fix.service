@@ -14,15 +14,17 @@
 # This got created on Tue, 16 Dec 2025 00:44:58 -0300
 [Unit]
 Description=Fix groups for Legacy rechunker
+ConditionPathExists=/run/ostree-booted
 Wants=local-fs.target
 After=local-fs.target
-# Before=systemd-sysusers.service
+Before=systemd-user-sessions.service
 
 [Service]
 Type=oneshot
-ExecStart=rechunker-group-fix /etc/group
-ExecStart=rechunker-group-fix /etc/gshadow
+ExecStart=bash -c 'touch /etc/gshadow && chmod 600 /etc/gshadow'
+ExecStart=bash -c 'rm /etc/gshadow'
 ExecStart=systemd-sysusers
+ExecStart=rechunker-group-fix
 ExecStart=systemd-tmpfiles --create --remove --boot --exclude-prefix=/dev
 
 [Install]
