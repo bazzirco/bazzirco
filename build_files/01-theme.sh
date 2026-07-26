@@ -45,7 +45,6 @@ dnf -y \
     dms-cli \
     dgop \
     dsearch
-install -Dpm0644 -t /usr/lib/pam.d/ /usr/share/quickshell/dms/assets/pam/* # Fixes long loging times on fingerprint auth
 
 #Only installs greeter for non-deck images
 if [ "$DECK_IMAGE" == False ] ; then
