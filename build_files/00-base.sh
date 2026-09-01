@@ -154,7 +154,6 @@ dnf -y install \
   rsync \
   spice-vdagent \
   steam-devices \
-  switcheroo-control \
   system-config-printer-libs \
   system-config-printer-udev \
   systemd-container \
