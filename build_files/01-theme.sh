@@ -99,6 +99,7 @@ dnf -y install \
 # we already have a service for handling fcitx5
 rm -f /usr/share/applications/fcitx5-wayland-launcher.desktop
 rm -f /usr/share/applications/org.fcitx.Fcitx5*.desktop
+rm -f /usr/share/wayland-sessions/gnome-wayland-oneshot.desktop
 
 # just breaks ostree deployments
 rm -rf /usr/share/doc/just
