@@ -13,17 +13,17 @@ dnf5 -y --enable-repo=terra install \
     valent \
     matugen
 
-dnf -y copr enable yalter/niri-git
-dnf -y copr disable yalter/niri-git
-echo "priority=1" | tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:yalter:niri-git.repo
-dnf -y --enablerepo copr:copr.fedorainfracloud.org:yalter:niri-git \
+dnf -y copr enable yalter/niri
+dnf -y copr disable yalter/niri
+echo "priority=1" | tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:yalter:niri.repo
+dnf -y --enablerepo copr:copr.fedorainfracloud.org:yalter:niri \
     install --setopt=install_weak_deps=False \
     niri
 rm -rf /usr/share/doc/niri
 
 dnf -y copr enable avengemedia/danklinux
 dnf -y copr disable avengemedia/danklinux
-dnf -y --enablerepo copr:copr.fedorainfracloud.org:avengemedia:danklinux install quickshell-git
+dnf -y --enablerepo copr:copr.fedorainfracloud.org:avengemedia:danklinux install quickshell
 
 #Bazzite uses HHD, which conflicts. When Bazzite switches from HHD, we shouldn't need to install it here anyway.
 
@@ -35,10 +35,10 @@ dnf -y --enablerepo copr:copr.fedorainfracloud.org:avengemedia:danklinux install
 #    inputplumber || true
 #inputplumber --version | grep -E -e "inputplumber [[:digit:]]*\.[[:digit:]]*\.[[:digit:]]*"
 
-dnf -y copr enable avengemedia/dms-git
-dnf -y copr disable avengemedia/dms-git
+dnf -y copr enable avengemedia/dms
+dnf -y copr disable avengemedia/dms
 dnf -y \
-    --enablerepo copr:copr.fedorainfracloud.org:avengemedia:dms-git \
+    --enablerepo copr:copr.fedorainfracloud.org:avengemedia:dms \
     --enablerepo copr:copr.fedorainfracloud.org:avengemedia:danklinux \
     install --setopt=install_weak_deps=False \
     dms \
@@ -49,7 +49,7 @@ dnf -y \
 #Only installs greeter for non-deck images
 if [ "$DECK_IMAGE" == False ] ; then
   dnf -y \
-      --enablerepo copr:copr.fedorainfracloud.org:avengemedia:dms-git \
+      --enablerepo copr:copr.fedorainfracloud.org:avengemedia:dms \
       --enablerepo copr:copr.fedorainfracloud.org:avengemedia:danklinux \
       install --setopt=install_weak_deps=False \
       dms-greeter 
