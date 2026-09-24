@@ -12,9 +12,7 @@ dnf5 versionlock delete \
         pipewire-libs \
         pipewire-plugin-libcamera \
         pipewire-pulseaudio \
-        pipewire-utils \
-        wireplumber \
-        wireplumber-libs
+        pipewire-utils
 
 dnf -y remove \
 		gdm \
