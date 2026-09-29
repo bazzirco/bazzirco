@@ -63,7 +63,6 @@ dnf -y install \
     brightnessctl \
     cava \
     chezmoi \
-    ddcutil \
     fastfetch \
     fcitx5-mozc \
     flatpak \
