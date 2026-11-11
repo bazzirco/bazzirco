@@ -115,7 +115,6 @@ dnf -y install \
   fuse-common \
   fwupd \
   gum \
-  gvfs-archive \
   gvfs-mtp \
   gvfs-nfs \
   gvfs-smb \
