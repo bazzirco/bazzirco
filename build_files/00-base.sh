@@ -185,10 +185,6 @@ EOF
 
 systemctl preset systemd-resolved.service
 
-dnf -y copr enable ublue-os/packages
-dnf -y copr disable ublue-os/packages
-dnf -y --enablerepo copr:copr.fedorainfracloud.org:ublue-os:packages install uupd ublue-os-udev-rules
-
 # ts so annoying :face_holding_back_tears: :v: 67
 sed -i 's|uupd|& --disable-module-distrobox|' /usr/lib/systemd/system/uupd.service
 
