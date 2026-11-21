@@ -60,7 +60,10 @@ jq --arg tag "$IMAGE_TAG" \
 #End de-bazzite-ify
 
 if [ "$DECK_IMAGE" == True ] ; then
-  sed -i 's|/usr/bin/gnome-session|/usr/bin/niri-session|g' /usr/bin/gnome-session-oneshot
+  sed -i 's|gnome\.desktop|niri.desktop|g' \
+    /usr/share/steamos-manager/platform.toml \
+    /usr/libexec/os-session-select \
+    /usr/libexec/bazzite-autologin
 fi
 
 systemctl enable systemd-timesyncd
