@@ -109,7 +109,7 @@ dnf install -y --setopt=install_weak_deps=False \
 
 #Only do greetd keyring stuff on non-deck images
 if [ "$DECK_IMAGE" == False ] ; then
-  sed --sandbox -i -e '/gnome_keyring.so/ s/-auth/auth/ ; /gnome_keyring.so/ s/-session/session/' /etc/pam.d/greetd
+  sed --sandbox -i -e '/gnome_keyring.so/ s/-auth/auth/ ; /gnome_keyring.so/ s/-session/session/' /usr/lib/pam.d/greetd
 fi
 
 # Codecs for video thumbnails on nautilus
